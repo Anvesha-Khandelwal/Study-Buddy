@@ -18,6 +18,8 @@ import os
 import shutil
 
 # Import all your modules
+# the backend directory is a package so we can import its modules from the
+# project root.  add an empty __init__.py in backend if it doesn't exist.
 from chunker import extract_text_from_pdf, chunk_text
 from retriever import retriever
 from generator import (
@@ -27,7 +29,7 @@ from generator import (
     get_viva_question,
     evaluate_viva_answer,
 )
-from config import UPLOAD_FOLDER
+from backend.config import UPLOAD_FOLDER
 
 # ── Create the FastAPI app ────────────────────────────
 app = FastAPI(

@@ -1,1 +1,25 @@
+# ── Never upload these to GitHub ─────────────────────
+
+# Secret keys
 .env
+
+# Python virtual environment (too large, recreate with pip install)
+venv/
+env/
+
+# Python cache files (auto-generated, not needed)
+__pycache__/
+*.pyc
+*.pyo
+
+# Uploaded PDFs (user data, not project code)
+data/uploads/
+data/*.pdf
+
+# FAISS index files (auto-generated when PDF is uploaded)
+*.faiss
+*.index
+
+# OS files
+.DS_Store
+Thumbs.db
