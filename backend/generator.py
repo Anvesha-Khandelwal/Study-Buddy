@@ -31,7 +31,7 @@ client = Groq(api_key=GROQ_API_KEY)
 
 # Best free model on Groq (fast + smart enough for this use case)
 # Alternatives: "llama3-70b-8192" (smarter but slower), "mixtral-8x7b-32768"
-MODEL = "llama3-8b-8192"
+MODEL = "llama-3.3-70b-versatile"
 
 
 # ── Helper: Format chunks into a readable context block ──

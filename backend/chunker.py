@@ -26,32 +26,19 @@ from config import CHUNK_SIZE, CHUNK_OVERLAP
 # ── Step 1: Extract raw text from PDF ────────────────
 
 def extract_text_from_pdf(file_path: str) -> str:
-    """
-    Read every page of a PDF and return all text as one big string.
-    Also records the page number so we can show "Source: Page 12" later.
-
-    Returns:
-        A string like:
-        "[PAGE 1]\nIntroduction to...\n[PAGE 2]\nChapter 1..."
-    """
-    if not os.path.exists(file_path):
-        raise FileNotFoundError(f"PDF not found at: {file_path}")
-
+    import pdfplumber
     full_text = ""
-    with open(file_path, "rb") as f:
-        reader = PyPDF2.PdfReader(f)
-        total_pages = len(reader.pages)
-        print(f"PDF has {total_pages} pages. Extracting text...")
-
-        for page_num, page in enumerate(reader.pages):
-            page_text = page.extract_text()
-
-            if page_text and page_text.strip():   # skip blank pages
-                full_text += f"\n[PAGE {page_num + 1}]\n{page_text}"
-
-    print(f"Extracted {len(full_text.split())} words from PDF ✓")
+    with pdfplumber.open(file_path) as pdf:
+        total = len(pdf.pages)
+        print(f"PDF has {total} pages. Extracting text...")
+        for i, page in enumerate(pdf.pages):
+            text = page.extract_text()
+            if text and text.strip():
+                full_text += f"\n[PAGE {i+1}]\n{text}"
+    if not full_text.strip():
+        raise ValueError("No text found. This PDF may be a scanned image.")
+    print(f"Extracted {len(full_text.split())} words ✓")
     return full_text
-
 
 # ── Step 2: Detect headings to preserve structure ────
 
